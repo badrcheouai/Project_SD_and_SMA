@@ -1,58 +1,62 @@
+# 🚗 Système Multi-Agents de Gestion de Stationnement
 
-## ⚙️ Installation & Exécution
-
-1. Importer le projet dans IntelliJ
-2. Ajouter le fichier `jade.jar` comme librairie
-3. Exécuter la classe `Main.java`
-
-> Cela démarre automatiquement :
-> - L’interface graphique principale (`VisualizerAgent`)
-> - L’agent de coordination central (`CentralAgent`)
-> - Les 5 agents de stationnement (`P1` à `P5`)
-> - Les voitures `V1` (placée en `P2`) et `V2` (placée en `P4`)
-> - Le panneau de contrôle pour lancer `V3`, `V4`, `V5`, `V6`
+Ce projet est une simulation d’un système intelligent de stationnement utilisant la plateforme **JADE** et une interface graphique **Java Swing**.
 
 ---
 
-## 🖥️ Guide Utilisateur
+## 📦 Prérequis
 
-### 🪟 Fenêtre de visualisation
-- Affiche les places de parking (`P1` à `P5`)
-- `V1` et `V2` sont déjà stationnées
-- `V3` à `V6` sont visibles en bas (non encore garées)
-
-### 🎛 Panneau de contrôle
-- Boutons `Lancer V3`, `Lancer V4`, etc.
-- En cliquant :
-  - Le véhicule est activé
-  - Il envoie une requête
-  - Il est animé automatiquement vers une place libre
+* Java JDK 17 ou supérieur
+* Bibliothèque `jade.jar` (inclus dans JADE)
+* Fonctionne en terminal sous Windows / Linux / macOS
 
 ---
 
-## 🚫 Parking complet
-- Si aucune place n’est disponible :
-  - Le véhicule reçoit un message "Parking complet"
-  - Il apparaît en **gris**, sans animation, dans le bas de la fenêtre
+## ⚙️ Installation universelle en ligne de commande
 
----
+### 1. Préparer les fichiers
 
-## ❌ Fermer le système
-- Fermez la fenêtre **“Visualisation collective des véhicules”** pour arrêter tous les agents
+Structure attendue :
 
----
+```
+Project_SD_and_SMA/
+├── jade.jar
+├── Main.java
+├── agents/
+│   ├── CentralAgent.java
+│   ├── VehicleAgent.java
+│   ├── ParkingSpotAgent.java
+│   ├── VisualizerAgent.java
+├── gui/
+│   ├── ParkingVisualizer.java
+│   ├── SharedVisualizer.java
+│   ├── LaunchControlPanel.java
+```
 
-## 📌 Remarques Techniques
+### 2. Compilation (terminal)
 
-- Une temporisation de 1 seconde est appliquée entre les requêtes pour éviter les conflits
-- Le `CentralAgent` maintient une liste des places déjà attribuées (`assignedSpots`)
-- `SharedVisualizer` permet à tous les agents d'accéder à l'interface graphique unique
+```bash
+cd Project_SD_and_SMA
+mkdir -p bin
+javac -cp jade.jar -d bin $(find . -name "*.java")
+```
 
----
+👉 Sur **Windows**, utilisez `;` au lieu de `:` :
 
-## 📚 Crédit
+```bash
+javac -cp jade.jar -d bin $(dir /s /b *.java)
+```
 
-Projet réalisé dans le cadre du système multi-agents avec :
-- Java 17
-- JADE Framework
-- Java Swing
+### 3. Exécution
+
+```bash
+java -cp "bin:jade.jar" Main   # Linux/macOS
+java -cp "bin;jade.jar" Main   # Windows
+```
+
+### 4. Optionnel : créer un JAR
+
+```bash
+jar cfe ProjectSMA.jar Main -C bin .
+java -cp "ProjectSMA.jar:jade.jar" Main
+```
